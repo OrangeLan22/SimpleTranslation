@@ -1,0 +1,254 @@
+:root {
+  --bg: #f3f4f7;
+  --panel: #ffffff;
+  --panel-2: #fafbfc;
+  --text: #16181d;
+  --text-dim: #5b616e;
+  --text-faint: #8b93a1;
+  --border: #e3e6eb;
+  --border-strong: #cbd1da;
+  --accent: #3b6ef6;
+  --accent-soft: rgba(59, 110, 246, 0.1);
+  --danger: #d93a3f;
+}
+
+:root[data-theme="dark"] {
+  --bg: #14161a;
+  --panel: #1c1f25;
+  --panel-2: #212429;
+  --text: #e8eaee;
+  --text-dim: #98a0ae;
+  --text-faint: #6f7787;
+  --border: #2b2f37;
+  --border-strong: #3a3f49;
+  --accent: #5b86ff;
+  --accent-soft: rgba(91, 134, 255, 0.16);
+  --danger: #ff6369;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Segoe UI", system-ui, sans-serif;
+}
+
+.update-app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.titlebar {
+  flex: 0 0 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.title-text {
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 0.3px;
+}
+
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 18px 22px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon-wrap {
+  margin: 2px 0 14px;
+}
+
+.app-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 22.5%;
+  corner-shape: squircle;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+  -webkit-user-drag: none;
+}
+
+.headline {
+  text-align: center;
+}
+
+.ver-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  line-height: 1.2;
+}
+
+.ver-new {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.3px;
+}
+
+.ver-arrow {
+  font-size: 13px;
+  color: var(--text-faint);
+}
+
+.ver-old {
+  font-size: 12.5px;
+  color: var(--text-faint);
+  text-decoration: line-through;
+}
+
+.sub {
+  margin-top: 7px;
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+
+.notes {
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px 13px;
+  max-height: 118px;
+  overflow-y: auto;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  corner-shape: squircle;
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--text-dim);
+  white-space: pre-wrap;
+  word-break: break-word;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+
+.progress-block {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.progress-track {
+  height: 7px;
+  border-radius: 4px;
+  corner-shape: squircle;
+  background: var(--border-strong);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 4px;
+  corner-shape: squircle;
+  background: var(--accent);
+  transition: width 0.18s ease-out;
+}
+
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 11.5px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.muted {
+  color: var(--text-faint);
+}
+
+
+.error-box {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  corner-shape: squircle;
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--danger) 38%, transparent);
+  color: var(--danger);
+  font-size: 11.5px;
+  line-height: 1.6;
+  word-break: break-word;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+
+.foot {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 22px 16px;
+}
+
+button {
+  font-family: inherit;
+  font-size: 12.5px;
+  padding: 8px 18px;
+  border-radius: 12px;
+  corner-shape: squircle;
+  cursor: pointer;
+  transition: background 0.14s, color 0.14s, border-color 0.14s, transform 0.1s;
+}
+
+button.ghost {
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+
+button.ghost:hover {
+  background: var(--panel);
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+button.primary {
+  background: var(--accent);
+  color: #fff;
+  border: 1px solid transparent;
+}
+
+button.primary:hover {
+  filter: brightness(1.06);
+}
+
+button.primary:active,
+button.ghost:active {
+  transform: scale(0.98);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+  transform: none;
+}

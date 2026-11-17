@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>简译</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-window">
+    
+    
+    <div class="update-banner" id="update-banner" hidden>
+      <span class="update-banner-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 3.6 2.9 19.4h18.2L12 3.6z" stroke-linejoin="round"/>
+          <path d="M12 9.6v4.2" stroke-linecap="round"/>
+          <circle cx="12" cy="16.6" r="0.9" fill="currentColor" stroke="none"/>
+        </svg>
+      </span>
+      <span class="update-banner-text" id="update-banner-text">发现新版本</span>
+      <button class="update-banner-go" id="update-banner-go">立即更新</button>
+      <button class="update-banner-later" id="update-banner-later" data-tooltip="稍后再说">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <header class="titlebar" data-tauri-drag-region="deep">
+      <div class="titlebar-brand">
+        <div class="logo">译</div>
+        <div class="brand-text">
+          <strong>简译</strong>
+          <small>SimpleTranslation</small>
+        </div>
+      </div>
+      <div class="titlebar-drag"></div>
+
+      <div class="titlebar-tools" data-tauri-drag-region="false">
+        <div class="theme-switch" role="group" aria-label="主题色">
+          <button data-theme-set="light">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 2.6v2.1M12 19.3v2.1M2.6 12h2.1M19.3 12h2.1M5.3 5.3l1.5 1.5M17.2 17.2l1.5 1.5M18.7 5.3l-1.5 1.5M6.8 17.2l-1.5 1.5"
+                    stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button data-theme-set="dark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        <button class="tool-btn" id="btn-settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="titlebar-sep"></div>
+
+      <div class="window-controls" data-tauri-drag-region="false">
+        <button class="win-btn" id="win-min">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M3.5 8h9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button class="win-btn" id="win-max">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <rect x="3.6" y="3.6" width="8.8" height="8.8" rx="1.4" fill="none"
+                  stroke="currentColor" stroke-width="1.3"/>
+          </svg>
+        </button>
+        <button class="win-btn win-close" id="win-close">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M4.2 4.2l7.6 7.6M11.8 4.2l-7.6 7.6" stroke="currentColor"
+                  stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="content">
+      
+      <section id="view-translate" class="view active">
+        <header class="view-header">
+          <h1>文档翻译</h1>
+        </header>
+
+        <div class="doc-grid">
+          <div class="pane">
+            <div class="pane-head">
+              <span>原文</span>
+              <span class="muted" id="doc-count">0 字</span>
+            </div>
+            <textarea id="doc-source" spellcheck="false"
+              placeholder="粘贴或输入要翻译的内容…（Ctrl + Enter 翻译）"></textarea>
+            <div class="pane-foot">
+              <div class="foot-left">
+                <select id="doc-scene" data-tooltip="翻译场景"></select>
+                <select id="doc-source-lang" data-tooltip="源语言（原文的语言）">
+                  <option value="auto">自动检测</option>
+                  <option value="简体中文">简体中文</option>
+                  <option value="繁體中文">繁體中文</option>
+                  <option value="English">English</option>
+                  <option value="日本語">日本語</option>
+                  <option value="한국어">한국어</option>
+                  <option value="Français">Français</option>
+                  <option value="Deutsch">Deutsch</option>
+                  <option value="Español">Español</option>
+                  <option value="Русский">Русский</option>
+                </select>
+                <span class="lang-arrow">→</span>
+                <select id="doc-target" data-tooltip="目标语言">
+                  <option value="简体中文">简体中文</option>
+                  <option value="繁體中文">繁體中文</option>
+                  <option value="English">English</option>
+                  <option value="日本語">日本語</option>
+                  <option value="한국어">한국어</option>
+                  <option value="Français">Français</option>
+                  <option value="Deutsch">Deutsch</option>
+                  <option value="Español">Español</option>
+                  <option value="Русский">Русский</option>
+                </select>
+              </div>
+              <button id="btn-translate" class="primary">
+                <span class="label">翻译</span>
+              </button>
+            </div>
+          </div>
+          <div class="pane">
+            <div class="pane-head">
+              <span>译文</span>
+              <span class="muted" id="doc-status"></span>
+            </div>
+            <div id="doc-output" class="output"></div>
+            <div class="pane-foot">
+              <button class="icon-btn" id="btn-copy-doc" data-tooltip="复制译文">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <rect x="9" y="9" width="11" height="11" rx="2"/>
+                  <path d="M5 15V6a2 2 0 0 1 2-2h9" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+      <section id="view-settings" class="view">
+        <header class="view-header">
+          <div class="header-left">
+            <button class="back-btn" id="btn-back-translate">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                <path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <h1>设置</h1>
+          </div>
+          <div class="controls">
+            <span class="muted" id="save-status"></span>
+            <button id="btn-reset-settings" class="ghost danger"
+              data-tooltip="重置全部设置为初始状态">恢复默认设置</button>
+          </div>
+        </header>
+
+      <div class="settings-layout">
+        <nav class="settings-nav">
+          <button class="settings-nav-item active" data-panel="trigger">划词翻译</button>
+          <button class="settings-nav-item" data-panel="model">模型配置</button>
+          <button class="settings-nav-item" data-panel="hotkeys">快捷键</button>
+          <button class="settings-nav-item" data-panel="scenes">场景与提示词</button>
+          <button class="settings-nav-item" data-panel="storage">通用</button>
+          <button class="settings-nav-item" data-panel="about">关于</button>
+        </nav>
+        <div class="settings-panels" id="settings-panels">
+        <section class="card settings-panel active" data-panel="trigger">
+            <h2>划词翻译</h2>
+            <p class="card-desc">选中文本后如何唤起划词翻译</p>
+            <div class="field-row">
+              <label>启用划词</label>
+              <label class="switch">
+                <input type="checkbox" id="selection-enabled" />
+                <span></span>
+              </label>
+            </div>
+            <div class="field-row">
+              <label>触发方式</label>
+              <div class="segmented" id="trigger-segmented">
+                <button data-value="button">悬浮按钮</button>
+                <button data-value="hotkey">快捷键</button>
+                <button data-value="both">两者都</button>
+              </div>
+            </div>
+            <p class="card-desc" id="trigger-hint"></p>
+            <div class="field-row">
+              <label>划词阈值</label>
+              <div class="inline-field">
+                <input type="text" id="selection-threshold" inputmode="numeric" placeholder="5000" />
+                <span class="muted">字，超出后不激活划词翻译（0 = 不限制）</span>
+              </div>
+            </div>
+          </section>
+
+        <section class="card settings-panel" data-panel="model">
+            <h2>模型配置</h2>
+            <p class="card-desc">当前版本支持 DeepSeek 的兼容 OpenAI 协议接口</p>
+            <div class="field-row">
+              <label>服务商</label>
+              <select id="api-provider">
+                <option value="deepseek">DeepSeek</option>
+              </select>
+            </div>
+            <div class="field-row">
+              <label>API 地址</label>
+              <input type="text" id="api-base" placeholder="https://api.deepseek.com" autocomplete="off" spellcheck="false" />
+            </div>
+            <div class="field-row">
+              <label>API Key</label>
+              <div class="inline-field">
+                <input type="password" id="api-key" placeholder="sk-…" autocomplete="off" spellcheck="false" />
+                <button class="ghost" id="btn-toggle-key">显示</button>
+              </div>
+            </div>
+            <div class="field-row">
+              <label>模型</label>
+              <div class="inline-field">
+                <select id="api-model">
+                  <option value="">填写 API Key 后自动获取</option>
+                </select>
+                <button class="ghost" id="btn-refresh-models">刷新</button>
+              </div>
+            </div>
+            <div class="field-row">
+              <label>温度</label>
+              <div class="inline-field">
+                <input type="range" id="api-temp" min="0" max="1.5" step="0.1" />
+                <span class="muted" id="api-temp-val">0.3</span>
+              </div>
+            </div>
+            <div class="field-row">
+              <label>流式输出</label>
+              <label class="switch">
+                <input type="checkbox" id="api-stream" />
+                <span></span>
+              </label>
+            </div>
+            <div class="field-row">
+              <label></label>
+              <div class="inline-field">
+                <button class="ghost" id="btn-test-api">测试连接</button>
+                <span class="muted" id="test-status"></span>
+              </div>
+            </div>
+          </section>
+
+        <section class="card settings-panel" data-panel="hotkeys">
+            <h2>快捷键</h2>
+            <p class="card-desc">点击输入框后按下组合键即可录制</p>
+            <div class="field-row">
+              <label>唤起主窗口</label>
+              <div class="hotkey-field">
+                <input type="text" class="hk-input" data-key="showWindow" readonly placeholder="未设置" />
+                <button class="ghost hk-clear" data-key="showWindow">清除</button>
+              </div>
+            </div>
+            <div class="field-row">
+              <label>划词翻译</label>
+              <div class="hotkey-field">
+                <input type="text" class="hk-input" data-key="translate" readonly placeholder="未设置" />
+                <button class="ghost hk-clear" data-key="translate">清除</button>
+              </div>
+            </div>
+            <div class="field-row">
+              <label>禁用划词</label>
+              <div class="hotkey-field">
+                <input type="text" class="hk-input" data-key="disable" readonly placeholder="未设置" />
+                <button class="ghost hk-clear" data-key="disable">清除</button>
+              </div>
+            </div>
+            <div class="field-row">
+              <label>启用划词</label>
+              <div class="hotkey-field">
+                <input type="text" class="hk-input" data-key="enable" readonly placeholder="未设置" />
+                <button class="ghost hk-clear" data-key="enable">清除</button>
+              </div>
+            </div>
+          </section>
+
+        <section class="card settings-panel" data-panel="scenes">
+            <h2>场景与提示词</h2>
+            <div class="card-desc prompt-help">
+              <div>每个场景拥有独立的系统提示词，原文会单独作为用户消息发送。</div>
+              <div><code>{target}</code> 目标语言 —— 要翻译成哪种语言</div>
+              <div><code>{source}</code> 源语言 —— 原文的语言；设为自动检测时替换成「自动检测到的语言」</div>
+              <div><code>{text}</code> 待翻译的原文 —— 一般不用写，写了会和原文重复</div>
+            </div>
+            <div class="scene-layout">
+              <div class="scene-block">
+                <div class="scene-block-title">场景</div>
+                <div id="scene-items"></div>
+                <button class="ghost full" id="btn-add-scene">+ 新建场景</button>
+              </div>
+              <div class="scene-block">
+                <div class="scene-block-title">提示词</div>
+                <div class="field-row">
+                  <label>场景名称</label>
+                  <input type="text" id="scene-name" />
+                </div>
+                <div class="field-row">
+                  <label>插入变量</label>
+                  <div class="prompt-vars">
+                    <button type="button" class="var-chip" data-var="{target}" data-tooltip="目标语言：要翻译成哪种语言">{target}</button>
+                    <button type="button" class="var-chip" data-var="{source}" data-tooltip="源语言：原文的语言">{source}</button>
+                    <button type="button" class="var-chip" data-var="{text}" data-tooltip="待翻译的原文（一般不用写）">{text}</button>
+                  </div>
+                </div>
+                <div class="field-row stretch">
+                  <label>系统提示词</label>
+                  <textarea id="scene-prompt" spellcheck="false" placeholder="留空则使用内置的通用翻译提示词"></textarea>
+                </div>
+                <div class="scene-editor-footer">
+                  <button class="ghost" id="btn-undo-prompt" hidden>撤销</button>
+                  <button class="ghost" id="btn-reset-prompt">恢复默认提示词</button>
+                  <button class="ghost danger" id="btn-del-scene">删除场景</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        <section class="card settings-panel" data-panel="storage">
+            <h2>通用</h2>
+            <div class="field-row">
+              <label>开机自启</label>
+              <label class="switch">
+                <input type="checkbox" id="autostart-toggle" />
+                <span></span>
+              </label>
+            </div>
+            <p class="card-desc" style="margin: 2px 0 12px">登录 Windows 后自动启动简译，并常驻托盘。</p>
+            <div class="field-row">
+              <label>配置文件</label>
+              <div class="path-box">
+                <code id="config-path">读取中…</code>
+                <button class="ghost" id="btn-open-config">打开目录</button>
+              </div>
+            </div>
+          </section>
+
+        <section class="card settings-panel" data-panel="about">
+            <h2>关于</h2>
+
+            
+            <div class="about-block">
+              <div class="about-block-title">联系作者</div>
+              <div class="about-author">
+                <img class="about-avatar" src="assets/avatar.png" alt="郕岚" />
+                <div class="about-author-text">
+                  <div class="about-name">郕岚</div>
+                  <div class="about-sub">简译 · 开发者</div>
+                </div>
+              </div>
+              <div class="about-contacts">
+                <button class="contact-btn" id="contact-wechat">微信</button>
+                <button class="contact-btn" id="contact-email">邮箱</button>
+                <button class="contact-btn" id="contact-github">GitHub</button>
+              </div>
+            </div>
+
+            
+            <div class="about-block">
+              <div class="about-block-title">更新</div>
+              <div class="field-row">
+                <label>启用更新</label>
+                <label class="switch">
+                  <input type="checkbox" id="update-enabled" />
+                  <span></span>
+                </label>
+              </div>
+              <div class="field-row">
+                <label>更新方式</label>
+                <div class="segmented" id="update-mode">
+                  <button data-value="auto">自动更新</button>
+                  <button data-value="notify">有更新时提示</button>
+                </div>
+              </div>
+              <div class="field-row">
+                <label>测试</label>
+                <div class="inline-field">
+                  <button class="ghost" id="btn-mock-auto">模拟自动更新</button>
+                  <button class="ghost" id="btn-mock-notify">模拟更新提示</button>
+                </div>
+              </div>
+              <p class="card-desc" style="margin: 10px 0 0">更新功能还在开发中，这里的设置暂时不会触发检查。</p>
+            </div>
+          </section>
+        </div>
+      </div>
+      </section>
+    </main>
+  </div>
+
+  
+  <div class="modal-mask" id="modal-apikey" hidden>
+    <div class="modal">
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+          <path d="M12 3.6 2.9 19.4h18.2L12 3.6z" stroke-linejoin="round"/>
+          <path d="M12 9.4v4.3" stroke-linecap="round"/>
+          <circle cx="12" cy="16.7" r="0.95" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <h2>尚未填写 LLM API Key</h2>
+      <p>翻译功能需要先配置一个大模型 API。当前支持 DeepSeek，请到设置中填入 API Key 后再试。</p>
+      <div class="modal-actions">
+        <button class="ghost" id="modal-cancel">稍后再说</button>
+        <button class="primary" id="modal-goto-settings">去设置</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal-mask" id="modal-confirm" hidden>
+    <div class="modal">
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+          <path d="M12 3.6 2.9 19.4h18.2L12 3.6z" stroke-linejoin="round"/>
+          <path d="M12 9.4v4.3" stroke-linecap="round"/>
+          <circle cx="12" cy="16.7" r="0.95" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <h2 id="confirm-title">确定？</h2>
+      <p id="confirm-desc"></p>
+      <div class="modal-actions">
+        <button class="ghost" id="confirm-cancel">取消</button>
+        <button class="primary" id="confirm-ok">确定</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal-mask" id="modal-wechat" hidden>
+    <div class="modal">
+      <h2>微信</h2>
+      <img class="qr-image" src="assets/wechat-qr.png" alt="微信二维码" />
+      <p class="modal-desc">扫码添加作者微信</p>
+      <div class="modal-actions">
+        <button class="ghost" id="btn-close-wechat">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="vendor/marked.min.js"></script>
+  <script src="tooltip.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <title>更新简译</title>
+  <link rel="stylesheet" href="update.css" />
+</head>
+<body>
+  <div class="update-app">
+    
+    <header class="titlebar" data-tauri-drag-region="deep">
+      <span class="title-text" data-tauri-drag-region>更新简译</span>
+    </header>
+
+    <main class="body">
+      <div class="icon-wrap">
+        <img class="app-icon" src="assets/app-icon.png" alt="简译" />
+      </div>
+
+      <div class="headline">
+        <div class="ver-line">
+          <span class="ver-new" id="ver-new">—</span>
+          <span class="ver-arrow">←</span>
+          <span class="ver-old" id="ver-old">—</span>
+        </div>
+        <div class="sub" id="status-text">正在准备…</div>
+      </div>
+
+      <div class="notes" id="notes" hidden></div>
+
+      <div class="progress-block" id="progress-block" hidden>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-meta">
+          <span id="progress-percent">0%</span>
+          <span id="progress-size" class="muted"></span>
+        </div>
+      </div>
+
+      <div class="error-box" id="error-box" hidden></div>
+    </main>
+
+    <footer class="foot">
+      <button class="ghost" id="btn-cancel">取消</button>
+      <button class="primary" id="btn-start">开始更新</button>
+    </footer>
+  </div>
+
+  <script src="update.js"></script>
+</body>
+</html>
