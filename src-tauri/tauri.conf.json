@@ -1,0 +1,115 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "简译",
+  "version": "1.2.0",
+  "identifier": "com.simpletranslation.app",
+  "build": {
+    "frontendDist": "../src"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "label": "main",
+        "title": "简译",
+        "url": "index.html",
+        "width": 1024,
+        "height": 700,
+        "minWidth": 1024,
+        "minHeight": 700,
+        "center": true,
+        "resizable": true,
+        "visible": false,
+        "decorations": false,
+        "shadow": true,
+        "theme": "Light"
+      },
+      {
+        "label": "popup",
+        "title": "翻译",
+        "url": "popup.html",
+        "width": 470,
+        "height": 430,
+        "minWidth": 340,
+        "minHeight": 220,
+        "resizable": true,
+        "decorations": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "visible": false,
+        "shadow": true
+      },
+      {
+        "label": "selection",
+        "title": "划词",
+        "url": "selection.html",
+        "width": 46,
+        "height": 46,
+        "resizable": false,
+        "decorations": false,
+        "transparent": true,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "focus": false,
+        "visible": false,
+        "shadow": false
+      },
+      {
+        "label": "splash",
+        "title": "简译",
+        "url": "splash.html",
+        "width": 340,
+        "height": 250,
+        "decorations": false,
+        "transparent": false,
+        "center": true,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "resizable": false,
+        "visible": false,
+        "shadow": true
+      },
+      {
+        "label": "notify",
+        "title": "简译",
+        "url": "notify.html",
+        "width": 348,
+        "height": 112,
+        "decorations": false,
+        "transparent": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "focus": false,
+        "resizable": false,
+        "visible": false,
+        "shadow": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "nsis"
+    ],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser",
+        "languages": [
+          "SimpChinese",
+          "English"
+        ]
+      }
+    }
+  },
+  "plugins": {}
+}

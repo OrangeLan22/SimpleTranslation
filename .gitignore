@@ -1,0 +1,35 @@
+# 依赖
+node_modules/
+
+# Rust 构建产物
+src-tauri/target/
+**/*.rs.bk
+
+# 生成的应用图标源图（仅根目录，src/assets 里的是前端需要引用的）
+/app-icon.png
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 本地配置（配置文件位于用户 AppData，不在此目录下，这里仅防御性忽略）
+*.local.json
+
+# Tauri 生成的 schema
+src-tauri/gen/schemas/
+
+# AI 工具会话数据
+.reasonix/
+
+# 发布工具（仅本地使用，不随仓库分发）
+scripts/
+
+# 调试截图（临时验证用，不进仓库）
+st-*.png
+
+# 调试临时文件
+_*.py
+_sel.log
+*.bak

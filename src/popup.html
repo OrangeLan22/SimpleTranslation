@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <title>翻译</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="popup">
+    
+    <header class="titlebar" data-tauri-drag-region="deep">
+      <div class="title-left">
+        <span class="dot" data-tauri-drag-region></span>
+        <span class="scene-label" id="scene-label">翻译中</span>
+        <span class="lang-pair" id="lang-pair"></span>
+      </div>
+      <div class="title-right">
+        <button id="btn-md" class="md-toggle" data-tooltip="切换 Markdown / 纯文本">MD</button>
+        <button id="btn-pin" class="icon-btn" data-tooltip="置顶">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M9 4h6l-1 6 3 3v2H7v-2l3-3-1-6z" stroke-linejoin="round"/>
+            <path d="M12 15v5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    
+    <div class="source-box">
+      <div class="source-text" id="source-text"></div>
+    </div>
+
+    
+    <div class="result" id="result">
+      <div class="placeholder" id="placeholder">正在获取译文…</div>
+    </div>
+
+    
+    <footer class="toolbar">
+      <select id="popup-scene" data-tooltip="切换场景"></select>
+      <select id="popup-source-lang" data-tooltip="原文语言"></select>
+      <span class="lang-arrow">→</span>
+      <select id="popup-lang" data-tooltip="翻译成"></select>
+      <div class="toolbar-right">
+        <button id="btn-retry" class="ghost" data-tooltip="重新翻译">重译</button>
+        <button id="btn-copy" class="ghost" data-tooltip="复制译文">复制</button>
+      </div>
+    </footer>
+  </div>
+
+  
+  <div class="modal-mask" id="modal-apikey" hidden>
+    <div class="modal">
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 3.6 2.9 19.4h18.2L12 3.6z" stroke-linejoin="round"/>
+          <path d="M12 9.4v4.3" stroke-linecap="round"/>
+          <circle cx="12" cy="16.7" r="0.95" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <h3>尚未填写 API Key</h3>
+      <p>翻译需要先在主窗口设置中配置 LLM API Key。</p>
+      <div class="modal-actions">
+        <button class="ghost" id="modal-cancel">返回</button>
+        <button class="primary" id="modal-goto-settings">去设置</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="vendor/marked.min.js"></script>
+  <script src="markdown.js"></script>
+  <script src="tooltip.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

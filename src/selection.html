@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>划词</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      -webkit-user-select: none;
+      user-select: none;
+      font-family: "Microsoft YaHei UI", "Segoe UI", system-ui, sans-serif;
+    }
+
+    #btn {
+      width:30px;
+      height: 30px;
+      padding: 0;
+      border: none;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      background: linear-gradient(140deg, #3b6ef6, #7b5cff);
+      color: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
+      opacity: 1;
+      transition: transform 0.13s ease, opacity 1.8s ease;
+      -webkit-app-region: no-drag;
+    }
+
+    #btn.dimmed:not(:hover) {
+      opacity: 0.6;
+    }
+
+    
+    #btn:hover {
+      opacity: 1;
+      transition: transform 0.13s ease, opacity 0.08s ease;
+    }
+
+    #btn:hover {
+      transform: scale(1.1);
+    }
+
+    
+    #btn.pressed { transform: scale(0.93); }
+  </style>
+</head>
+<body>
+  <button id="btn">
+    <div style="font-weight: bold;">译</div>
+  </button>
+
+  <script>
+    const { invoke } = window.__TAURI__.core;
+    const { listen } = window.__TAURI__.event;
+    const btn = document.getElementById("btn");
+
+        const DIM_DELAY = 1200;
+
+    let dimTimer = null;
+
+    
+    function onShown() {
+      clearTimeout(dimTimer);
+
+                  btn.style.transition = "none";
+      btn.classList.remove("dimmed");
+      void btn.offsetWidth;
+      btn.style.transition = "";
+
+      dimTimer = setTimeout(() => btn.classList.add("dimmed"), DIM_DELAY);
+    }
+
+        document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+        btn.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+      if (e.button === 0) btn.classList.add("pressed");
+    });
+
+    window.addEventListener("mouseup", () => btn.classList.remove("pressed"));
+    window.addEventListener("blur", () => btn.classList.remove("pressed"));
+
+    btn.addEventListener("click", async (e) => {
+            if (e.button !== 0) return;
+      e.preventDefault();
+      btn.style.visibility = "hidden";
+      try {
+        await invoke("selection_clicked");
+      } finally {
+        btn.style.visibility = "visible";
+      }
+    });
+
+        listen("selection-shown", onShown);
+
+        onShown();
+  </script>
+</body>
+</html>

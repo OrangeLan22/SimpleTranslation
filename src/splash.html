@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <title>简译</title>
+  <style>
+    :root {
+      --bg: #f3f4f7;
+      --text: #16181d;
+      --text-dim: #6b7280;
+      --accent: #3b6ef6;
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #14161a;
+      --text: #e8eaee;
+      --text-dim: #8b93a1;
+      --accent: #5b86ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Segoe UI", system-ui, sans-serif;
+    }
+
+    
+    .splash-icon {
+      width: 104px;
+      height: 104px;
+      border-radius: 22.5%;
+      corner-shape: squircle;
+      -webkit-user-drag: none;
+      background-color: transparent;
+    }
+
+    .splash-name {
+      font-size: 18px;
+      font-weight: 650;
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+
+    .dot-row {
+      display: flex;
+      gap: 5px;
+      height: 6px;
+    }
+
+    .dot-row i {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.25;
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    .dot-row i:nth-child(2) {
+      animation-delay: 0.18s;
+    }
+
+    .dot-row i:nth-child(3) {
+      animation-delay: 0.36s;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.22; transform: scale(0.85); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+
+    .splash-hint {
+      font-size: 11.5px;
+      color: var(--text-dim);
+      letter-spacing: 0.3px;
+    }
+  </style>
+</head>
+<body>
+  <img class="splash-icon" src="assets/app-icon.png" alt="简译" />
+  <div class="splash-name">简译</div>
+  <div class="dot-row"><i></i><i></i><i></i></div>
+  <div class="splash-hint">正在启动…</div>
+
+  <script>
+        (async () => {
+      try {
+        const { invoke } = window.__TAURI__.core;
+        const cfg = await invoke("get_config");
+        document.documentElement.setAttribute(
+          "data-theme",
+          cfg && cfg.theme === "dark" ? "dark" : "light"
+        );
+      } catch {
+        
+      }
+    })();
+  </script>
+</body>
+</html>
